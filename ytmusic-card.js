@@ -1383,11 +1383,8 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
                     </div>
                 `:B}
             </div>
-        `}_renderMiniPlayer(){var t,e,i,s,o,r,n,a,l;const c=(null===(e=null===(t=this._entity)||void 0===t?void 0:t.attributes)||void 0===e?void 0:e.entity_picture_local)||(null===(s=null===(i=this._entity)||void 0===i?void 0:i.attributes)||void 0===s?void 0:s.entity_picture),d=(null===(r=null===(o=this._entity)||void 0===o?void 0:o.attributes)||void 0===r?void 0:r.media_title)||("it"===Ut()?"Sconosciuto":"Unknown"),p=(null===(a=null===(n=this._entity)||void 0===n?void 0:n.attributes)||void 0===a?void 0:a.media_artist)||"",h="playing"===(null===(l=this._entity)||void 0===l?void 0:l.state),u=this._getProgress();return V`
+        `}_renderMiniPlayer(){var t,e,i,s,o,r,n,a,l;const c=(null===(e=null===(t=this._entity)||void 0===t?void 0:t.attributes)||void 0===e?void 0:e.entity_picture_local)||(null===(s=null===(i=this._entity)||void 0===i?void 0:i.attributes)||void 0===s?void 0:s.entity_picture),d=(null===(r=null===(o=this._entity)||void 0===o?void 0:o.attributes)||void 0===r?void 0:r.media_title)||("it"===Ut()?"Sconosciuto":"Unknown"),p=(null===(a=null===(n=this._entity)||void 0===n?void 0:n.attributes)||void 0===a?void 0:a.media_artist)||"",h="playing"===(null===(l=this._entity)||void 0===l?void 0:l.state);return V`
             <div class="mini-player" @click=${()=>{this._playerExpanded=!0}}>
-                <div class="mini-progress-bar">
-                    <div class="mini-progress-fill" style="width: ${u}%"></div>
-                </div>
                 ${c?V`<img class="mini-art" src="${c}">`:V`<div class="mini-art-ph"><ha-icon icon="mdi:music"></ha-icon></div>`}
                 <div class="mini-info">
                     <div class="mini-title">${d}</div>
@@ -1711,21 +1708,6 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
             }
 
             .mini-player:hover { background: var(--yt-surface2); }
-
-            .mini-progress-bar {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 2px;
-                background: rgba(255,255,255,0.15);
-            }
-
-            .mini-progress-fill {
-                height: 100%;
-                background: var(--yt-red);
-                transition: width 1s linear;
-            }
 
             .mini-art {
                 width: 52px;

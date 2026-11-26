@@ -1584,13 +1584,9 @@ export class YTMusicPlayingCard extends LitElement {
             || (getUILang() === "it" ? "Sconosciuto" : "Unknown");
         const artist = this._entity?.attributes?.media_artist || "";
         const isPlaying = this._entity?.state === "playing";
-        const progress = this._getProgress();
 
         return html`
             <div class="mini-player" @click=${() => { this._playerExpanded = true; }}>
-                <div class="mini-progress-bar">
-                    <div class="mini-progress-fill" style="width: ${progress}%"></div>
-                </div>
                 ${art
                     ? html`<img class="mini-art" src="${art}">`
                     : html`<div class="mini-art-ph"><ha-icon icon="mdi:music"></ha-icon></div>`}
@@ -2157,21 +2153,6 @@ export class YTMusicPlayingCard extends LitElement {
             }
 
             .mini-player:hover { background: var(--yt-surface2); }
-
-            .mini-progress-bar {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 2px;
-                background: rgba(255,255,255,0.15);
-            }
-
-            .mini-progress-fill {
-                height: 100%;
-                background: var(--yt-red);
-                transition: width 1s linear;
-            }
 
             .mini-art {
                 width: 52px;
