@@ -184,6 +184,7 @@ export class YTMusicSearchCard extends LitElement {
     static get styles(): CSSResultGroup {
         return [css`
             :host {
+                display: block;
                 --yt-bg: #0f0f0f;
                 --yt-surface: #1e1e1e;
                 --yt-surface2: #282828;
@@ -198,6 +199,8 @@ export class YTMusicSearchCard extends LitElement {
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
+                z-index: 0;
+                isolation: isolate;
                 border-radius: 12px;
                 color: var(--yt-text);
             }
