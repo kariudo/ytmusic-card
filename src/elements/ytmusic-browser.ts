@@ -390,6 +390,8 @@ export class YTMusicBrowser extends LitElement {
                 }
 
                 ytmusic-list {
+                    flex: 1;
+                    min-height: 0;
                     overflow: auto;
                 }
 

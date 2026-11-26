@@ -368,6 +368,7 @@ function ut(t,e){return(({finisher:t,descriptor:e})=>(i,s)=>{var o;if(void 0===s
 
             ytmusic-browser {
                 flex: 1;
+                min-height: 0;
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;
@@ -834,6 +835,8 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
                 }
 
                 ytmusic-list {
+                    flex: 1;
+                    min-height: 0;
                     overflow: auto;
                 }
 

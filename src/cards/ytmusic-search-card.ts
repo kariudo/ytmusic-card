@@ -364,6 +364,7 @@ export class YTMusicSearchCard extends LitElement {
 
             ytmusic-browser {
                 flex: 1;
+                min-height: 0;
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;
