@@ -1578,11 +1578,26 @@ export class YTMusicPlayingCard extends LitElement {
     }
 
     _renderMiniPlayer() {
-        const art = this._entity?.attributes?.entity_picture_local
-            || this._entity?.attributes?.entity_picture;
-        const title = this._entity?.attributes?.media_title || "Unknown";
-        const artist = this._entity?.attributes?.media_artist || "";
         const isPlaying = this._entity?.state === "playing";
+        const knownTrack = !!(
+            this._entity?.attributes?.media_title
+            || this._entity?.attributes?.media_artist
+            || this._entity?.attributes?.entity_picture
+            || this._entity?.attributes?.entity_picture_local
+        );
+        const idle = this._entity?.state === "idle"
+            || this._entity?.state === "off"
+            || this._entity?.state === "unavailable";
+        const art = idle && !knownTrack
+            ? null
+            : (this._entity?.attributes?.entity_picture_local
+                || this._entity?.attributes?.entity_picture);
+        const title = idle && !knownTrack
+            ? ""
+            : (this._entity?.attributes?.media_title || "");
+        const artist = idle && !knownTrack
+            ? ""
+            : (this._entity?.attributes?.media_artist || "");
 
         return html`
             <div class="mini-player" @click=${() => { this._playerExpanded = true; }}>
@@ -1616,11 +1631,26 @@ export class YTMusicPlayingCard extends LitElement {
     }
 
     _renderFullPlayer() {
-        const art = this._entity?.attributes?.entity_picture_local
-            || this._entity?.attributes?.entity_picture;
-        const title = this._entity?.attributes?.media_title || "Unknown";
-        const artist = this._entity?.attributes?.media_artist || "";
         const playing = this._entity?.state === "playing";
+        const knownTrack = !!(
+            this._entity?.attributes?.media_title
+            || this._entity?.attributes?.media_artist
+            || this._entity?.attributes?.entity_picture
+            || this._entity?.attributes?.entity_picture_local
+        );
+        const idle = this._entity?.state === "idle"
+            || this._entity?.state === "off"
+            || this._entity?.state === "unavailable";
+        const art = idle && !knownTrack
+            ? null
+            : (this._entity?.attributes?.entity_picture_local
+                || this._entity?.attributes?.entity_picture);
+        const title = idle && !knownTrack
+            ? ""
+            : (this._entity?.attributes?.media_title || "");
+        const artist = idle && !knownTrack
+            ? ""
+            : (this._entity?.attributes?.media_artist || "");
         // Fullscreen with an active visualizer style: the cover shrinks to the top
         // left and the animation owns the whole art area — no overlap. With the
         // fs_visualizer flag off (card config) or the "cover"/"off" styles, the
