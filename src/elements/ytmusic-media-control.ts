@@ -107,10 +107,10 @@ export class YTMusicMediaControl extends LitElement {
             <!-- labeled pills -->
             <div class="pills">
                 <button class="pill ${shuffleActive ? "on" : ""}" @click=${this._shuffleList}>
-                    ${ShuffleVariantIcon}<span>Casuale</span>
+                    ${ShuffleVariantIcon}<span>Shuffle</span>
                 </button>
                 <button class="pill ${repeatActive ? "on" : ""}" @click=${this._changeRepeat}>
-                    ${RepeatIcon}<span>Ripeti</span>
+                    ${RepeatIcon}<span>Repeat</span>
                 </button>
                 <button class="pill pill-icon" title="Opzioni" @click=${this._openQueueOptions}>
                     <ha-icon icon="mdi:dots-vertical"></ha-icon>

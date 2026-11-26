@@ -969,10 +969,10 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
             <!-- labeled pills -->
             <div class="pills">
                 <button class="pill ${k?"on":""}" @click=${this._shuffleList}>
-                    ${$t}<span>Casuale</span>
+                    ${$t}<span>Shuffle</span>
                 </button>
                 <button class="pill ${A?"on":""}" @click=${this._changeRepeat}>
-                    ${wt}<span>Ripeti</span>
+                    ${wt}<span>Repeat</span>
                 </button>
                 <button class="pill pill-icon" title="Opzioni" @click=${this._openQueueOptions}>
                     <ha-icon icon="mdi:dots-vertical"></ha-icon>
