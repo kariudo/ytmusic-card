@@ -10,6 +10,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { join } from "lit/directives/join.js";
 import { map } from "lit/directives/map.js";
 import { YTMusicList } from "./ytmusic-list";
+import "./ytmusic-list";
 import { YTMusicItem, YTMusicListState } from "../utils/utils";
 import { ArrowLeftIcon, CloseIcon } from "../utils/icons";
 
