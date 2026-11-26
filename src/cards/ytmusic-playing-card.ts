@@ -1580,7 +1580,8 @@ export class YTMusicPlayingCard extends LitElement {
     _renderMiniPlayer() {
         const art = this._entity?.attributes?.entity_picture_local
             || this._entity?.attributes?.entity_picture;
-        const title = this._entity?.attributes?.media_title || "Sconosciuto";
+        const title = this._entity?.attributes?.media_title
+            || (getUILang() === "it" ? "Sconosciuto" : "Unknown");
         const artist = this._entity?.attributes?.media_artist || "";
         const isPlaying = this._entity?.state === "playing";
         const progress = this._getProgress();
@@ -1988,7 +1989,9 @@ export class YTMusicPlayingCard extends LitElement {
             }
 
             ha-card.mini {
-                height: 62px;
+                height: 72px;
+                min-height: 72px;
+                max-height: 72px;
             }
 
             /* Native fullscreen: the host element fills the screen, the card follows.
@@ -2140,7 +2143,12 @@ export class YTMusicPlayingCard extends LitElement {
                 display: flex;
                 align-items: center;
                 gap: 10px;
-                padding: 8px 12px;
+                box-sizing: border-box;
+                width: 100%;
+                height: 72px;
+                min-height: 72px;
+                max-height: 72px;
+                padding: 10px 12px;
                 background: var(--yt-surface);
                 border-top: 1px solid rgba(255,255,255,0.06);
                 cursor: pointer;
@@ -2166,16 +2174,16 @@ export class YTMusicPlayingCard extends LitElement {
             }
 
             .mini-art {
-                width: 44px;
-                height: 44px;
+                width: 52px;
+                height: 52px;
                 border-radius: 4px;
                 object-fit: cover;
                 flex-shrink: 0;
             }
 
             .mini-art-ph {
-                width: 44px;
-                height: 44px;
+                width: 52px;
+                height: 52px;
                 border-radius: 4px;
                 background: var(--yt-surface2);
                 display: flex;
@@ -2188,6 +2196,7 @@ export class YTMusicPlayingCard extends LitElement {
             .mini-info {
                 flex: 1;
                 min-width: 0;
+                padding-right: 4px;
             }
 
             .mini-title {

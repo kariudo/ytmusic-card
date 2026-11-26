@@ -1383,7 +1383,7 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
                     </div>
                 `:B}
             </div>
-        `}_renderMiniPlayer(){var t,e,i,s,o,r,n,a,l;const c=(null===(e=null===(t=this._entity)||void 0===t?void 0:t.attributes)||void 0===e?void 0:e.entity_picture_local)||(null===(s=null===(i=this._entity)||void 0===i?void 0:i.attributes)||void 0===s?void 0:s.entity_picture),d=(null===(r=null===(o=this._entity)||void 0===o?void 0:o.attributes)||void 0===r?void 0:r.media_title)||"Sconosciuto",p=(null===(a=null===(n=this._entity)||void 0===n?void 0:n.attributes)||void 0===a?void 0:a.media_artist)||"",h="playing"===(null===(l=this._entity)||void 0===l?void 0:l.state),u=this._getProgress();return V`
+        `}_renderMiniPlayer(){var t,e,i,s,o,r,n,a,l;const c=(null===(e=null===(t=this._entity)||void 0===t?void 0:t.attributes)||void 0===e?void 0:e.entity_picture_local)||(null===(s=null===(i=this._entity)||void 0===i?void 0:i.attributes)||void 0===s?void 0:s.entity_picture),d=(null===(r=null===(o=this._entity)||void 0===o?void 0:o.attributes)||void 0===r?void 0:r.media_title)||("it"===Ut()?"Sconosciuto":"Unknown"),p=(null===(a=null===(n=this._entity)||void 0===n?void 0:n.attributes)||void 0===a?void 0:a.media_artist)||"",h="playing"===(null===(l=this._entity)||void 0===l?void 0:l.state),u=this._getProgress();return V`
             <div class="mini-player" @click=${()=>{this._playerExpanded=!0}}>
                 <div class="mini-progress-bar">
                     <div class="mini-progress-fill" style="width: ${u}%"></div>
@@ -1543,7 +1543,9 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
             }
 
             ha-card.mini {
-                height: 62px;
+                height: 72px;
+                min-height: 72px;
+                max-height: 72px;
             }
 
             /* Native fullscreen: the host element fills the screen, the card follows.
@@ -1695,7 +1697,12 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
                 display: flex;
                 align-items: center;
                 gap: 10px;
-                padding: 8px 12px;
+                box-sizing: border-box;
+                width: 100%;
+                height: 72px;
+                min-height: 72px;
+                max-height: 72px;
+                padding: 10px 12px;
                 background: var(--yt-surface);
                 border-top: 1px solid rgba(255,255,255,0.06);
                 cursor: pointer;
@@ -1721,16 +1728,16 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
             }
 
             .mini-art {
-                width: 44px;
-                height: 44px;
+                width: 52px;
+                height: 52px;
                 border-radius: 4px;
                 object-fit: cover;
                 flex-shrink: 0;
             }
 
             .mini-art-ph {
-                width: 44px;
-                height: 44px;
+                width: 52px;
+                height: 52px;
                 border-radius: 4px;
                 background: var(--yt-surface2);
                 display: flex;
@@ -1743,6 +1750,7 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
             .mini-info {
                 flex: 1;
                 min-width: 0;
+                padding-right: 4px;
             }
 
             .mini-title {
