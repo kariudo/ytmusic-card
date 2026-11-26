@@ -4,16 +4,6 @@ A YouTube-Music-styled "now playing" card that works with **both** the [YTube_Me
 
 The **YTMusic Playing Card** is a YouTube-Music-styled player with a full "now playing" view and an optional compact mini view. The full view includes an undulating cover, animated progress, transport controls, shuffle/repeat, volume, and quick-access **category chips**. The mini view keeps the current track, artwork, play/pause, next, and expand controls in a compact bar.
 
-<p align="center">
-  <img src="img/ytmusic-player-new.svg" width="300" alt="Now Playing">
-  &nbsp;&nbsp;
-  <img src="img/ytmusic-popup-new.svg" width="300" alt="Category popup">
-</p>
-
-<p align="center">
-  <img src="img/ytmusic-mini-view.svg" width="434" alt="Compact mini player">
-</p>
-
 ## Compatibility
 
 The card **auto-detects** the media player type from the entity and adapts:
