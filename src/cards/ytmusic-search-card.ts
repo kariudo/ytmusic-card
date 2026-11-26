@@ -1,5 +1,6 @@
 import { LitElement, html, css, CSSResultGroup, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
+import { query } from "lit/decorators.js";
 import { CastAudioIcon } from "../utils/icons";
 import { areDeeplyEqual, YTMusicItem } from "../utils/utils";
 
@@ -14,6 +15,9 @@ export class YTMusicSearchCard extends LitElement {
     _hass: any;
     @state() _entity: any;
     @state() _menuOpen: boolean = false;
+    @state() private _searchQuery: string = "";
+    @state() private _searchFilter: string = "songs";
+    @query("ytmusic-browser") private _browser: any;
 
     static getConfigElement() {}
 
@@ -92,12 +96,35 @@ export class YTMusicSearchCard extends LitElement {
                         ${this._renderSourceSelector()}
                     </div>
                 </div>
+                <div class="card-search">
+                    <div class="search-input-wrap">
+                        <ha-icon icon="mdi:magnify" class="search-icon"></ha-icon>
+                        <input
+                            type="search"
+                            placeholder="Search..."
+                            .value=${this._searchQuery}
+                            @input=${(e: Event) => { this._searchQuery = (e.target as HTMLInputElement).value; }}
+                            @keyup=${(e: KeyboardEvent) => { if (e.key === "Enter") this._runSearch(); }}
+                        />
+                    </div>
+                    <select
+                        .value=${this._searchFilter}
+                        @change=${(e: Event) => { this._searchFilter = (e.target as HTMLSelectElement).value; this._runSearch(); }}
+                    >
+                        <option value="all">All</option>
+                        <option value="artists">Artists</option>
+                        <option value="songs">Songs</option>
+                        <option value="albums">Albums</option>
+                        <option value="playlists">Playlists</option>
+                    </select>
+                </div>
                 <div class="search-wrap">
                     <ytmusic-browser
                         .hass=${this._hass}
                         .entity=${this._entity}
                         .initialAction=${this._initialAction}
                         .coverNavigation=${true}
+                        .hideSearch=${true}
                     ></ytmusic-browser>
                 </div>
             </ha-card>
@@ -179,6 +206,12 @@ export class YTMusicSearchCard extends LitElement {
             entity_id: tgt?.entity_id || this._config.entity_id,
             is_volume_muted: !tgt?.attributes?.is_volume_muted,
         });
+    }
+
+    private async _runSearch() {
+        const query = this._searchQuery.trim();
+        if (!query) return;
+        await this._browser?.searchExternal(query, this._searchFilter);
     }
 
     static get styles(): CSSResultGroup {
@@ -275,6 +308,58 @@ export class YTMusicSearchCard extends LitElement {
                 display: flex;
                 flex-direction: column;
                 padding: 0 8px 8px;
+            }
+
+            .card-search {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 8px;
+                padding: 4px 12px 8px;
+            }
+
+            .search-input-wrap {
+                height: 40px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                box-sizing: border-box;
+                padding: 0 14px;
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 24px;
+                background: var(--yt-surface2);
+            }
+
+            .search-input-wrap .search-icon {
+                --mdc-icon-size: 18px;
+                opacity: 0.6;
+            }
+
+            .search-input-wrap input {
+                flex: 1;
+                min-width: 0;
+                height: 100%;
+                border: none;
+                outline: none;
+                background: none;
+                color: var(--yt-text);
+                font-size: 14px;
+            }
+
+            .search-input-wrap input::placeholder {
+                color: var(--yt-text3);
+            }
+
+            .card-search select {
+                height: 40px;
+                min-width: 112px;
+                border: 1px solid rgba(255,255,255,0.12);
+                border-radius: 20px;
+                background: var(--yt-surface2);
+                color: var(--yt-text);
+                font-size: 13px;
+                font-weight: 500;
+                padding: 0 12px;
+                outline: none;
             }
 
             ytmusic-browser {

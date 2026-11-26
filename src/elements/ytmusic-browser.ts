@@ -92,13 +92,16 @@ export class YTMusicBrowser extends LitElement {
         this._browse(element);
     }
 
-    public async searchExternal(query: string) {
+    public async searchExternal(query: string, filter: string = "all") {
         if (!query || query === "") return;
         const data = {
             entity_id: this.entity?.entity_id,
             query: query,
             limit: 40,
         };
+        if (filter !== "all") {
+            (data as any).filter = filter;
+        }
         await this.hass.callService("ytube_music_player", "search", data);
         this._fetchSearchResults();
     }
