@@ -80,6 +80,7 @@ export class YTMusicBrowser extends LitElement {
                     <option value="all">All</option>
                     <option value="artists">Artists</option>
                     <option value="songs" selected>Songs</option>
+                    <option value="videos">Videos</option>
                     <option value="albums">Albums</option>
                     <option value="playlists">Playlists</option>
                 </select>
@@ -100,8 +101,21 @@ export class YTMusicBrowser extends LitElement {
             query: query,
             limit: 40,
         };
+        const filterMap: Record<string, string> = {
+            track: "songs",
+            song: "songs",
+            songs: "songs",
+            videos: "videos",
+            video: "videos",
+            albums: "albums",
+            album: "albums",
+            artists: "artists",
+            artist: "artists",
+            playlists: "playlists",
+            playlist: "playlists",
+        };
         if (filter !== "all") {
-            (data as any).filter = filter;
+            (data as any).filter = filterMap[filter] ?? filter;
         }
         await this.hass.callService("ytube_music_player", "search", data);
         await this._fetchSearchResults();
@@ -274,6 +288,19 @@ export class YTMusicBrowser extends LitElement {
 
         if (!query || query == "") return;
 
+        const filterMap: Record<string, string> = {
+            track: "songs",
+            song: "songs",
+            songs: "songs",
+            videos: "videos",
+            video: "videos",
+            albums: "albums",
+            album: "albums",
+            artists: "artists",
+            artist: "artists",
+            playlists: "playlists",
+            playlist: "playlists",
+        };
         let data;
         if (filter == "all") {
             data = {
@@ -285,7 +312,7 @@ export class YTMusicBrowser extends LitElement {
             data = {
                 entity_id: this.entity?.entity_id,
                 query: query,
-                filter: filter,
+                filter: filterMap[filter] ?? filter,
                 limit: 40,
             };
         }

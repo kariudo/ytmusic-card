@@ -114,6 +114,7 @@ export class YTMusicSearchCard extends LitElement {
                         <option value="all">All</option>
                         <option value="artists">Artists</option>
                         <option value="songs">Songs</option>
+                        <option value="videos">Videos</option>
                         <option value="albums">Albums</option>
                         <option value="playlists">Playlists</option>
                     </select>
