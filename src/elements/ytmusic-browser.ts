@@ -27,6 +27,8 @@ export class YTMusicBrowser extends LitElement {
     @state() private _polrYTubeList: YTMusicList;
     @state() private _searchTextField: any;
     @state() private _isSearchResults: boolean;
+    private _lastSearchQuery: string = "";
+    private _lastSearchFilter: string = "all";
 
     protected updated(
         _changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>
@@ -96,6 +98,8 @@ export class YTMusicBrowser extends LitElement {
 
     public async searchExternal(query: string, filter: string = "all") {
         if (!query || query === "") return;
+        this._lastSearchQuery = query;
+        this._lastSearchFilter = filter;
         const data = {
             entity_id: this.entity?.entity_id,
             query: query,
@@ -153,6 +157,37 @@ export class YTMusicBrowser extends LitElement {
         this.requestUpdate();
     }
 
+    private _rankSearchResults(items: YTMusicItem[]): YTMusicItem[] {
+        const normalize = (value: string) => (value || "")
+            .normalize("NFKD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, " ")
+            .trim();
+        const query = normalize(this._lastSearchQuery);
+        if (!query) return items;
+
+        const ranked = items.map((item, index) => {
+            const title = normalize(item.title);
+            let score = 0;
+            if (title === query) score += 100;
+            else if (title.startsWith(query + " ")) score += 80;
+            else if (title.startsWith(query)) score += 60;
+            else if (title.includes(" " + query + " ")) score += 40;
+            else if (title.includes(query)) score += 20;
+
+            if (this._lastSearchFilter === "artists") {
+                if (title === query) score += 20;
+                if (!title.includes(" - ")) score += 10;
+            }
+            return { item, score, index };
+        });
+
+        return ranked
+            .sort((a, b) => b.score - a.score || a.index - b.index)
+            .map(({ item }) => item);
+    }
+
     async _fetchSearchResults() {
         this._polrYTubeList.state = YTMusicListState.LOADING;
 
@@ -168,6 +203,9 @@ export class YTMusicBrowser extends LitElement {
                 response["children"] = response["children"].filter(
                     (el) => !el["media_content_id"].startsWith("MPSP")
                 );
+                if (this._lastSearchFilter !== "all") {
+                    response["children"] = this._rankSearchResults(response["children"]);
+                }
 
                 if (!this._isSearchResults)
                     this._previousBrowseHistory = this._browseHistory;
@@ -287,6 +325,8 @@ export class YTMusicBrowser extends LitElement {
         const filter = (this.renderRoot.querySelector("#filter") as HTMLSelectElement)?.value;
 
         if (!query || query == "") return;
+        this._lastSearchQuery = query;
+        this._lastSearchFilter = filter;
 
         const filterMap: Record<string, string> = {
             track: "songs",
