@@ -2,12 +2,16 @@
 
 A YouTube-Music-styled "now playing" card that works with **both** the [YTube_Media_Player integration](https://github.com/KoljaWindeler/ytube_music_player) **and [Music Assistant](https://www.music-assistant.io/)** — the card **auto-detects** which one the entity belongs to and adapts accordingly.
 
-The **YTMusic Playing Card** is a full "now playing" player with a YouTube-Music look: an undulating cover that breathes while playing, a wavy animated progress bar, big red transport controls, shuffle/repeat, a volume pill, and quick-access **category chips** that open a translucent popup with that category's music, plus a **search** with type filters.
+The **YTMusic Playing Card** is a YouTube-Music-styled player with a full "now playing" view and an optional compact mini view. The full view includes an undulating cover, animated progress, transport controls, shuffle/repeat, volume, and quick-access **category chips**. The mini view keeps the current track, artwork, play/pause, next, and expand controls in a compact bar.
 
 <p align="center">
   <img src="img/ytmusic-player-new.svg" width="300" alt="Now Playing">
   &nbsp;&nbsp;
   <img src="img/ytmusic-popup-new.svg" width="300" alt="Category popup">
+</p>
+
+<p align="center">
+  <img src="img/ytmusic-mini-view.svg" width="434" alt="Compact mini player">
 </p>
 
 ## Compatibility
@@ -33,9 +37,9 @@ The advanced Music Assistant features (full queue, queue actions, Discover/recom
 
 1. Open the HACS section of Home Assistant.
 2. Click the "..." button in the top right corner and select "Custom Repositories."
-3. In the window that opens paste this Github URL ([https://github.com/cash83/ytmusic-card]).
+3. In the window that opens paste this GitHub URL: `https://github.com/kariudo/ytmusic-card`
 4. Select "Lovelace"
-5. In the window that opens when you select it click om "Install This Repository in HACS"
+5. Select the repository and click "Download".
 
 ### Manually
 
@@ -61,9 +65,13 @@ A **visual editor** is included, so all options below can be set with switches/f
 | `enqueue_menu` | `true` | show the Add/Play (⋮) menu on search & browse items (Music Assistant) |
 | `media_browser` | `true` | show the advanced browse chips (Recommendations / Recent / Library) |
 | `players` | `true` | show the multi-room Players panel (Music Assistant) |
+| `follow_active` | `true` | follow the active Music Assistant player after queue transfer |
 | `show_chips` | `true` | show the category chips row |
 | `cover_animation` | `true` | undulating "breathing" cover while playing |
 | `cover_glow` | `true` | animated colored halo behind the cover |
+| `fs_visualizer` | `true` | enable the fullscreen visualizer modes |
+| `mini_view_enabled` | `true` | enable the compact mini view and the expand/collapse controls |
+| `default_view` | `full` | view shown when the card has no saved preference: `full` or `mini` |
 | `anim_speed` | `6` | cover animation duration in seconds (higher = slower) |
 | `glow_size` | `100` | halo size, in percent |
 
@@ -73,9 +81,11 @@ A **visual editor** is included, so all options below can be set with switches/f
 type: custom:ytmusic-playing-card
 entity_id: media_player.youtube_living_room_display
 header: YouTube Music
+mini_view_enabled: true
+default_view: full
 ```
 
-![YTMusic Playing Card](img/ytmusic-popup-new.svg)
+The full/minimized state is remembered separately for each media player in browser storage. In the full view, use the chevron-down control in the header to switch to mini view. In mini view, use the chevron-up control to expand it again.
 
 ## YTMusic-Search-Card
 

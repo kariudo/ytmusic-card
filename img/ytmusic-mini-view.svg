@@ -1,0 +1,18 @@
+<svg viewBox="0 0 434 72" xmlns="http://www.w3.org/2000/svg" font-family="'Roboto','Segoe UI',system-ui,sans-serif">
+  <rect width="434" height="72" rx="12" fill="#1e1e1e"/>
+  <rect x="10" y="10" width="52" height="52" rx="4" fill="#3a2030"/>
+  <circle cx="36" cy="36" r="18" fill="#ff6fb3" opacity="0.9"/>
+  <path d="M23 48 C29 34 37 24 49 20 C45 30 38 40 23 48Z" fill="#ffe0ef" opacity="0.85"/>
+  <text x="76" y="32" fill="#ffffff" font-size="15" font-weight="700">ReawakeR (feat. Felix of Stray Kids)</text>
+  <text x="76" y="51" fill="#a6a6a6" font-size="12">LISA</text>
+  <g fill="#ffffff" transform="translate(304,24)">
+    <rect x="0" y="0" width="5" height="24" rx="1.5"/>
+    <rect x="12" y="0" width="5" height="24" rx="1.5"/>
+  </g>
+  <g fill="#ffffff" transform="translate(352,24)">
+    <path d="M0 0 L18 12 L0 24 Z"/>
+  </g>
+  <g fill="#ffffff" transform="translate(392,24)">
+    <path d="M8 0 L16 8 L8 16" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
