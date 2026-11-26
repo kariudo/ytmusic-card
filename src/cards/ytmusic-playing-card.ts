@@ -391,7 +391,11 @@ export class YTMusicPlayingCard extends LitElement {
     // The entity the card currently reflects and controls. After a transfer this is
     // the target player; otherwise it is the configured entity.
     private get _pid(): string {
-        return this._entity?.entity_id || this._config.entity_id;
+        const configured = this._config.entity_id;
+        if (configured?.startsWith("media_player.ytube_")) {
+            return configured;
+        }
+        return this._entity?.entity_id || configured;
     }
 
     // In Music Assistant the queue belongs to the group leader (the first entry
@@ -434,7 +438,17 @@ export class YTMusicPlayingCard extends LitElement {
     private _pickActive(): string {
         const cfg = this._config.entity_id;
         const cfgState = this._hass?.states?.[cfg];
-        // Only Music Assistant players follow. YT Music / others stay on the config entity.
+        // YouTube Music wrapper: reflect the currently selected Cast/receiver
+        // player metadata while keeping cfg as the playback-control owner.
+        if (cfg?.startsWith("media_player.ytube_")) {
+            const target = cfgState?.attributes?.remote_player_id;
+            const targetState = target ? this._hass?.states?.[target] : null;
+            if (target && targetState && ["playing", "paused", "buffering"].includes(targetState.state)) {
+                return target;
+            }
+            return cfg;
+        }
+        // Only Music Assistant players follow. Others stay on the config entity.
         const cfgIsMA = cfgState?.attributes?.mass_player_type !== undefined;
         if (!cfgIsMA) return cfg;
         // 1. Card-initiated transfer target that is alive wins.
@@ -720,7 +734,19 @@ export class YTMusicPlayingCard extends LitElement {
 
     set hass(hass) {
         this._hass = hass;
-        const newEntity = this._hass["states"][this._pickActive()];
+        let newEntity = this._hass["states"][this._pickActive()];
+        const cfgId = this._config.entity_id;
+        const cfgState = cfgId ? this._hass["states"][cfgId] : null;
+        const targetId = cfgState?.attributes?.remote_player_id;
+        if (cfgId?.startsWith("media_player.ytube_")
+            && newEntity?.entity_id !== cfgId
+            && targetId) {
+            newEntity = structuredClone(newEntity);
+            newEntity.attributes = {
+                ...newEntity.attributes,
+                remote_player_id: targetId,
+            };
+        }
         if (!areDeeplyEqual(this._entity, newEntity, [])) {
             this._entity = structuredClone(newEntity);
         }
