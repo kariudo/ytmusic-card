@@ -1,6 +1,5 @@
 import { LitElement, html, css, CSSResultGroup, nothing } from "lit";
 import { property, state } from "lit/decorators.js";
-import "../elements/ytmusic-search";
 import { CastAudioIcon } from "../utils/icons";
 import { areDeeplyEqual, YTMusicItem } from "../utils/utils";
 
@@ -94,11 +93,12 @@ export class YTMusicSearchCard extends LitElement {
                     </div>
                 </div>
                 <div class="search-wrap">
-                    <ytmusic-search
-                        ._hass=${this._hass}
-                        ._entity=${this._entity}
+                    <ytmusic-browser
+                        .hass=${this._hass}
+                        .entity=${this._entity}
                         .initialAction=${this._initialAction}
-                    ></ytmusic-search>
+                        .coverNavigation=${true}
+                    ></ytmusic-browser>
                 </div>
             </ha-card>
         `;
@@ -277,7 +277,7 @@ export class YTMusicSearchCard extends LitElement {
                 padding: 0 8px 8px;
             }
 
-            ytmusic-search {
+            ytmusic-browser {
                 flex: 1;
                 overflow: hidden;
                 display: flex;

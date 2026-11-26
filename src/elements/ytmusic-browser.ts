@@ -79,6 +79,7 @@ export class YTMusicBrowser extends LitElement {
                     <option value="all">All</option>
                     <option value="artists">Artists</option>
                     <option value="songs" selected>Songs</option>
+                    <option value="albums">Albums</option>
                     <option value="playlists">Playlists</option>
                 </select>
             </div>
@@ -332,19 +333,22 @@ export class YTMusicBrowser extends LitElement {
 
                 .search {
                     display: grid;
-                    grid-template-columns: 1fr 120px;
+                    grid-template-columns: minmax(0, 1fr) auto;
                     align-items: center;
-                    gap: 4px;
+                    gap: 8px;
+                    padding: 8px 12px 4px;
                 }
 
                 .search-input-wrap {
                     display: flex;
                     align-items: center;
-                    background: rgba(var(--rgb-primary-text-color), 0.06);
-                    border-radius: 4px;
-                    padding: 0 8px;
-                    height: 42px;
-                    gap: 4px;
+                    background: var(--yt-surface2, #282828);
+                    border: 1px solid rgba(255,255,255,0.12);
+                    border-radius: 24px;
+                    padding: 0 14px;
+                    height: 40px;
+                    gap: 8px;
+                    box-sizing: border-box;
                 }
 
                 .search-input-wrap input {
@@ -363,13 +367,14 @@ export class YTMusicBrowser extends LitElement {
                 }
 
                 select {
-                    height: 42px;
-                    background: var(--card-background-color);
-                    border: none;
-                    border-radius: 4px;
-                    color: var(--primary-text-color);
+                    height: 40px;
+                    min-width: 112px;
+                    background: var(--yt-surface2, #282828);
+                    border: 1px solid rgba(255,255,255,0.12);
+                    border-radius: 20px;
+                    color: var(--primary-text-color, #ffffff);
                     font-size: 14px;
-                    padding: 0 8px;
+                    padding: 0 12px;
                     cursor: pointer;
                     outline: none;
                     width: 100%;
