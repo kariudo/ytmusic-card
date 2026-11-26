@@ -1619,7 +1619,8 @@ export class YTMusicPlayingCard extends LitElement {
     _renderFullPlayer() {
         const art = this._entity?.attributes?.entity_picture_local
             || this._entity?.attributes?.entity_picture;
-        const title = this._entity?.attributes?.media_title || "Sconosciuto";
+        const title = this._entity?.attributes?.media_title
+            || (getUILang() === "it" ? "Sconosciuto" : "Unknown");
         const artist = this._entity?.attributes?.media_artist || "";
         const playing = this._entity?.state === "playing";
         // Fullscreen with an active visualizer style: the cover shrinks to the top
