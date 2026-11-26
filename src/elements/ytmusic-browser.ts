@@ -300,6 +300,7 @@ export class YTMusicBrowser extends LitElement {
                     display: flex;
                     overflow: auto;
                     flex-grow: 1;
+                    min-height: 0;
                     flex-direction: column;
                     gap: 8px;
                 }

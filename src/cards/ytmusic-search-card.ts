@@ -229,6 +229,7 @@ export class YTMusicSearchCard extends LitElement {
 
             ha-card {
                 background: var(--yt-bg) !important;
+                height: 700px;
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
@@ -304,6 +305,7 @@ export class YTMusicSearchCard extends LitElement {
             /* ── SEARCH WRAPPER ── */
             .search-wrap {
                 flex: 1;
+                min-height: 0;
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;

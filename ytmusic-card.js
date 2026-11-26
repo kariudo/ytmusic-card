@@ -233,6 +233,7 @@ function ut(t,e){return(({finisher:t,descriptor:e})=>(i,s)=>{var o;if(void 0===s
 
             ha-card {
                 background: var(--yt-bg) !important;
+                height: 700px;
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
@@ -308,6 +309,7 @@ function ut(t,e){return(({finisher:t,descriptor:e})=>(i,s)=>{var o;if(void 0===s
             /* ── SEARCH WRAPPER ── */
             .search-wrap {
                 flex: 1;
+                min-height: 0;
                 overflow: hidden;
                 display: flex;
                 flex-direction: column;
@@ -745,6 +747,7 @@ function*(t,e){const i="function"==typeof e;if(void 0!==t){let s=-1;for(const o 
                     display: flex;
                     overflow: auto;
                     flex-grow: 1;
+                    min-height: 0;
                     flex-direction: column;
                     gap: 8px;
                 }
