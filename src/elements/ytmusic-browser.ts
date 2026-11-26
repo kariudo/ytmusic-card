@@ -103,7 +103,7 @@ export class YTMusicBrowser extends LitElement {
             (data as any).filter = filter;
         }
         await this.hass.callService("ytube_music_player", "search", data);
-        this._fetchSearchResults();
+        await this._fetchSearchResults();
     }
 
     async _browse(element: YTMusicItem) {
@@ -150,7 +150,7 @@ export class YTMusicBrowser extends LitElement {
             });
 
             if (response["children"]?.length > 0) {
-                response["children"].filter(
+                response["children"] = response["children"].filter(
                     (el) => !el["media_content_id"].startsWith("MPSP")
                 );
 
