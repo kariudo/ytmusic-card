@@ -695,6 +695,20 @@ export class YTMusicPlayingCard extends LitElement {
         if (!config.entity_id) throw new Error("entity_id must be specified");
         this._config = structuredClone(config);
         if (!("header" in this._config)) this._config.header = "YouTube Music";
+        if (!("mini_view_enabled" in this._config)) this._config.mini_view_enabled = true;
+        if (!("default_view" in this._config)) this._config.default_view = "full";
+        if (this._config.mini_view_enabled === false) {
+            this._playerExpanded = true;
+        } else {
+            let savedView: string | null = null;
+            try {
+                savedView = localStorage.getItem(`ytmusic-card-view:${this._config.entity_id}`);
+            } catch { /* private mode */ }
+            const initialView = savedView === "full" || savedView === "mini"
+                ? savedView
+                : this._config.default_view;
+            this._playerExpanded = initialView !== "mini";
+        }
         if (!("initialAction" in this._config)) {
             this._config.initialAction = new YTMusicItem();
             this._config.initialAction.title = YT_FILTERS_LABELS[getUILang()][0];
@@ -1474,9 +1488,11 @@ export class YTMusicPlayingCard extends LitElement {
     }
 
     render() {
+        const miniEnabled = this._config?.mini_view_enabled !== false;
+        const miniView = miniEnabled && !this._playerExpanded;
         return html`
-            <ha-card class="${this._isFs ? "fs" : ""}">
-                ${this._renderFullPlayer()}
+            <ha-card class="${this._isFs ? "fs " : ""}${miniView ? "mini" : ""}">
+                ${miniView ? this._renderMiniPlayer() : this._renderFullPlayer()}
                 ${this._popupOpen ? this._renderChipPopup() : nothing}
                 ${this._searchOpen ? this._renderSearchPopup() : nothing}
                 ${this._enqueueItem ? this._renderEnqueueMenu() : nothing}
@@ -1587,8 +1603,20 @@ export class YTMusicPlayingCard extends LitElement {
                 <button class="mini-btn" @click=${(e: Event) => { e.stopPropagation(); this._skipNext(); }}>
                     ${SkipNextIcon}
                 </button>
+                <button class="mini-btn" title="${getUILang() === "it" ? "Espandi" : "Expand"}"
+                    @click=${(e: Event) => { e.stopPropagation(); this._setPlayerView("full"); }}>
+                    <ha-icon icon="mdi:chevron-up"></ha-icon>
+                </button>
             </div>
         `;
+    }
+
+    private _setPlayerView(view: "full" | "mini") {
+        if (this._config.mini_view_enabled === false && view === "mini") return;
+        this._playerExpanded = view === "full";
+        try {
+            localStorage.setItem(`ytmusic-card-view:${this._config.entity_id}`, view);
+        } catch { /* private mode */ }
     }
 
     _renderFullPlayer() {
@@ -1626,6 +1654,12 @@ export class YTMusicPlayingCard extends LitElement {
                         <button class="icon-btn" title="${getUILang() === "it" ? "Schermo intero" : "Fullscreen"}"
                             @click=${() => this._toggleFullscreen()}>
                             <ha-icon icon="${this._isFs ? "mdi:fullscreen-exit" : "mdi:fullscreen"}"></ha-icon>
+                        </button>` : nothing}
+                        ${this._config.mini_view_enabled !== false ? html`
+                        <button class="icon-btn"
+                            title="${getUILang() === "it" ? "Vista compatta" : "Mini view"}"
+                            @click=${(e: Event) => { e.stopPropagation(); this._setPlayerView("mini"); }}>
+                            <ha-icon icon="mdi:chevron-down"></ha-icon>
                         </button>` : nothing}
                         ${this._renderSourceSelector("full-player")}
                     </div>
@@ -1951,6 +1985,10 @@ export class YTMusicPlayingCard extends LitElement {
                 isolation: isolate;
                 border-radius: 12px;
                 color: var(--yt-text);
+            }
+
+            ha-card.mini {
+                height: 62px;
             }
 
             /* Native fullscreen: the host element fills the screen, the card follows.

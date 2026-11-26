@@ -8,7 +8,7 @@ function editorLang(): "it" | "en" {
 
 // Boolean feature flags shown as switches. All default ON, so we fill defaults
 // into the form data to keep the switches in sync with the real behavior.
-const BOOL_FLAGS = ["show_search", "show_queue", "queue_actions", "enqueue_menu", "media_browser", "players", "favorites", "follow_active", "show_chips", "cover_animation", "cover_glow", "fs_visualizer"];
+const BOOL_FLAGS = ["show_search", "show_queue", "queue_actions", "enqueue_menu", "media_browser", "players", "favorites", "follow_active", "show_chips", "cover_animation", "cover_glow", "fs_visualizer", "mini_view_enabled"];
 
 const LABELS: Record<string, Record<string, string>> = {
     it: {
@@ -27,6 +27,8 @@ const LABELS: Record<string, Record<string, string>> = {
         cover_animation: "Anima copertina (ondeggia)",
         cover_glow: "Alone colorato dietro la copertina",
         fs_visualizer: "Animazioni Winamp a schermo intero (OFF = copertina normale)",
+        mini_view_enabled: "Abilita vista compatta",
+        default_view: "Vista predefinita",
         anim_speed: "Velocità animazione copertina (secondi)",
         glow_size: "Dimensione alone (%)",
     },
@@ -46,6 +48,8 @@ const LABELS: Record<string, Record<string, string>> = {
         cover_animation: "Animate cover (undulate)",
         cover_glow: "Colored halo behind the cover",
         fs_visualizer: "Fullscreen Winamp visualizer (OFF = normal cover)",
+        mini_view_enabled: "Enable compact mini view",
+        default_view: "Default view",
         anim_speed: "Cover animation speed (seconds)",
         glow_size: "Halo size (%)",
     },
@@ -72,6 +76,7 @@ export class YTMusicPlayingCardEditor extends LitElement {
             { name: "header", selector: { text: {} } },
             { name: "speakers", selector: { entity: { domain: "media_player", multiple: true } } },
             ...BOOL_FLAGS.map((name) => ({ name, selector: { boolean: {} } })),
+            { name: "default_view", selector: { select: { options: [{ label: "Full", value: "full" }, { label: "Mini", value: "mini" }] } } },
             { name: "anim_speed", selector: { number: { min: 2, max: 15, step: 0.5, mode: "box", unit_of_measurement: "s" } } },
             { name: "glow_size", selector: { number: { min: 60, max: 160, step: 5, mode: "box", unit_of_measurement: "%" } } },
         ];
@@ -82,6 +87,7 @@ export class YTMusicPlayingCardEditor extends LitElement {
     private get _data() {
         const data: any = { ...this._config };
         for (const f of BOOL_FLAGS) data[f] = this._config[f] !== false;
+        data.default_view = this._config.default_view ?? "full";
         data.anim_speed = this._config.anim_speed ?? 6;
         data.glow_size = this._config.glow_size ?? 100;
         return data;
