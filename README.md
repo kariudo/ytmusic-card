@@ -1,8 +1,18 @@
 # YTMusic Card
 
-A YouTube-Music-styled "now playing" card that works with **both** the [YTube_Media_Player integration](https://github.com/KoljaWindeler/ytube_music_player) **and [Music Assistant](https://www.music-assistant.io/)** — the card **auto-detects** which one the entity belongs to and adapts accordingly.
+A YouTube-Music-styled "now playing" and search card for Home Assistant. It works directly with the [YTube_Media_Player integration](https://github.com/KoljaWindeler/ytube_music_player) and also supports [Music Assistant](https://www.music-assistant.io/) when available — no Music Assistant setup is required.
 
 The **YTMusic Playing Card** is a YouTube-Music-styled player with a full "now playing" view and an optional compact mini view. The full view includes an undulating cover, animated progress, transport controls, shuffle/repeat, volume, and quick-access **category chips**. The mini view keeps the current track, artwork, play/pause, next, and expand controls in a compact bar.
+
+<p align="center">
+  <img src="img/ytmusic-playing-card.png" width="720" alt="YTMusic Playing Card - full view">
+  &nbsp;&nbsp;
+  <img src="img/ytmusic-mini-view.png" width="720" alt="YTMusic Playing Card - mini view">
+</p>
+
+<p align="center">
+  <img src="img/ytmusic-search-card.png" width="720" alt="YTMusic Search Card">
+</p>
 
 ## Compatibility
 
@@ -13,9 +23,9 @@ The card **auto-detects** the media player type from the entity and adapts:
 
 Just point `entity_id` at either a `ytube_music_player` entity or a Music Assistant `media_player` entity.
 
-### Music Assistant — required integration
+### Optional Music Assistant integration
 
-The advanced Music Assistant features (full queue, queue actions, Discover/recommendations) rely on the companion integration **[Music Assistant Queue Actions (`mass_queue`)](https://github.com/droans/mass_queue)**. Install it via HACS and create a config entry for your MA instance. Without it, the card still works but the Music Assistant queue falls back to showing only the current + next track.
+The YouTube Music and base card features work without Music Assistant. The advanced Music Assistant features (full queue, queue actions, Discover/recommendations) can additionally use **[Music Assistant Queue Actions (`mass_queue`)](https://github.com/droans/mass_queue)**. Install that companion integration only if you use those advanced MA features.
 
 
 
@@ -76,6 +86,25 @@ default_view: full
 ```
 
 The full/minimized state is remembered separately for each media player in browser storage. In the full view, use the chevron-down control in the header to switch to mini view. In mini view, use the chevron-up control to expand it again.
+
+### Mini View
+
+The optional mini view is a compact 72px player strip with:
+
+- current track artwork
+- track title and artist
+- play/pause
+- next track
+- expand back to the full card
+
+Configure it in YAML or through the visual editor:
+
+```yaml
+mini_view_enabled: true
+default_view: mini
+```
+
+Set `mini_view_enabled: false` to always keep the card in full view. The most recent full/mini choice is saved in browser storage for each configured media player.
 
 ## YTMusic-Search-Card
 
