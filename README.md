@@ -33,13 +33,11 @@ The YouTube Music and base card features work without Music Assistant. The advan
 
 ## Installation
 
-### HACS
+### Home Assistant Marketplace
 
-1. Open the HACS section of Home Assistant.
-2. Click the "..." button in the top right corner and select "Custom Repositories."
-3. In the window that opens paste this GitHub URL: `https://github.com/kariudo/ytmusic-card`
-4. Select "Lovelace"
-5. Select the repository and click "Download".
+1. Open **Settings → Add-ons, Backups & Supervisor → Marketplace** in Home Assistant.
+2. Add this GitHub repository as a custom repository: `https://github.com/kariudo/ytmusic-card`
+3. Select the YTMusic Card repository and click **Download**.
 
 ### Manually
 
